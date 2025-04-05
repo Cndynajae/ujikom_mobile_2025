@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -18,6 +19,13 @@ class HomeView extends GetView<HomeController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Lottie.asset(
+            //   'asset/lottie/home.json',
+            //   fit: BoxFit.cover,
+            // ),
+            const SizedBox( 
+              height: 15,
+            ),
             Text(
               'Intra-sub',
               style: GoogleFonts.roboto(
