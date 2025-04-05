@@ -27,7 +27,7 @@ class HomeView extends GetView<HomeController> {
               height: 15,
             ),
             Text(
-              'Intra-sub',
+              'INTRA-SUB',
               style: GoogleFonts.roboto(
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,

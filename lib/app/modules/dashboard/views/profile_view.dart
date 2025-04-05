@@ -14,6 +14,7 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),

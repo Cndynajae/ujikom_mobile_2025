@@ -19,7 +19,7 @@ class LoginView extends GetView<LoginController> {
             Padding(
               padding: const EdgeInsets.only(top: 70.0),
               child: Text(
-                'Intra-sub',
+                'INTRA-SUB',
                 style: GoogleFonts.roboto(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
