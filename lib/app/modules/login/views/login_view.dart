@@ -16,19 +16,19 @@ class LoginView extends GetView<LoginController> {
       backgroundColor: HexColor('#ffffff'),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 70.0),
-              child: Text(
-                'INTRA-SUB',
-                style: GoogleFonts.roboto(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
+              child: Center( 
+                child: Image.asset( 
+                  'assets/images/INTRA_logo.png',
+                   width: 200,
+                   height: 200,
                 ),
               ),
             ),
+            // const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
@@ -40,6 +40,7 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(
                 left: 15.0,
@@ -58,7 +59,7 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             Container(
               height: 50,
