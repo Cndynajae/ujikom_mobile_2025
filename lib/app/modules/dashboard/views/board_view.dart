@@ -88,10 +88,10 @@ class BoardView extends GetView<DashboardController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Chip(
-                            label: Text("ID: ${task.id}"),
-                            backgroundColor: Colors.blue.shade100,
-                          ),
+                          // Chip(
+                          //   label: Text("ID: ${task.id}"),
+                          //   backgroundColor: Colors.blue.shade100,
+                          // ),
                           Text(
                             "Status: ${task.statusId}",
                             style: const TextStyle(

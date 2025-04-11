@@ -8,6 +8,7 @@ abstract class Routes {
   static const DASHBOARD = _Paths.DASHBOARD;
   static const PROFILE = _Paths.PROFILE;
   static const BOARD = _Paths.BOARD;
+
 }
 
 abstract class _Paths {
