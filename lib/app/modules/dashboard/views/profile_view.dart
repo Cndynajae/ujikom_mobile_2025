@@ -15,24 +15,113 @@ class ProfileView extends GetView<ProfileController> {
         title: const Text('PROFILE'),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              Get.defaultDialog(
-                  title: "Konfirmasi",
-                  middleText: "Apakah anda ingin Keluar ?",
-                  textConfirm: "Ya, Keluar",
-                  textCancel: "Batal",
-                  confirmTextColor: Colors.white,
-                  onConfirm: () {
-                    controller.logout();
-                    Get.back();
-                  },
-                  onCancel: () {
-                    Get.back();
-                  });
-            },
-          ),
+        Container(
+            margin: const EdgeInsets.only(right: 16),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Get.dialog(
+                  Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 5,
+                    backgroundColor: Colors.white,
+                    child: Container(
+                      width: Get.width * 0.8,
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Konfirmasi",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          const Text(
+                            "Apakah anda ingin Keluar?",
+                            style: TextStyle(fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                onPressed: () => Get.back(),
+                                child: const Text(
+                                  "Batal",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  controller.logout();
+                                  Get.back();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Ya, Keluar",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  barrierDismissible: false,
+                );
+              },
+              icon: const Icon(Icons.logout, color: Colors.white),
+              label:
+                  const Text("Logout", style: TextStyle(color: Colors.white)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                elevation: 2,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          )
+          // IconButton(
+          //   icon: const Icon(Icons.logout),
+          //   onPressed: () {
+          //     Get.defaultDialog(
+          //         title: "Konfirmasi",
+          //         middleText: "Apakah anda ingin Keluar ?",
+          //         textConfirm: "Ya, Keluar",
+          //         textCancel: "Batal",
+          //         confirmTextColor: Colors.white,
+          //         onConfirm: () {
+          //           controller.logout();
+          //           Get.back();
+          //         },
+          //         onCancel: () {
+          //           Get.back();
+          //         });
+          //   },
+          // ),
         ],
       ),
       body: Center(
