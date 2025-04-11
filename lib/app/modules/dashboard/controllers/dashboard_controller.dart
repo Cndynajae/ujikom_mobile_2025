@@ -2,8 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intra_sub_mobile/app/data/kanban_response.dart';
+import 'package:intra_sub_mobile/app/modules/dashboard/views/beranda_view.dart';
 import 'package:intra_sub_mobile/app/modules/dashboard/views/board_view.dart';
 import 'package:intra_sub_mobile/app/modules/dashboard/views/profile_view.dart';
+import 'package:intra_sub_mobile/app/modules/home/views/home_view.dart';
 import 'package:intra_sub_mobile/app/utils/api.dart';
 
 class DashboardController extends GetxController {
@@ -16,6 +18,7 @@ class DashboardController extends GetxController {
   }
 
   final List<Widget> pages = [
+    BerandaView(),
     BoardView(),
     ProfileView(),
   ];
