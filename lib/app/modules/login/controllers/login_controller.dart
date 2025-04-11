@@ -5,20 +5,15 @@ import 'package:intra_sub_mobile/app/modules/dashboard/views/dashboard_view.dart
 import 'package:intra_sub_mobile/app/utils/api.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
   final _getConnect = GetConnect();
-  TextEditingController nrpController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  final authToken = GetStorage();
+  final TextEditingController nrpController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  final GetStorage authToken = GetStorage();
+  final RxBool isPasswordHidden = true.obs;
 
-  @override
-  void onReady() {
-    super.onReady();
+  void togglePasswordVisibility() {
+    isPasswordHidden.value = !isPasswordHidden.value;
   }
 
   @override
@@ -29,38 +24,39 @@ class LoginController extends GetxController {
   }
 
   void loginNow() async {
-    final response = await _getConnect.post(BaseUrl.login, {
-      'nrp': nrpController.text,
-      'password': passwordController.text,
-    });
+    try {
+      final response = await _getConnect.post(BaseUrl.login, {
+        'nrp': nrpController.text.trim(),
+        'password': passwordController.text,
+      });
 
-    if (response.statusCode == 200) {
-      // Ambil token dari 'access_token'
-      final token = response.body['access_token'];
-      if (token != null) {
-        // Simpan token di GetStorage
-        GetStorage().write('token', token);
-        print(" Token berhasil disimpan: $token");
+      if (response.statusCode == 200) {
+        final token = response.body['access_token'];
 
-        // Pindah ke Dashboard
-        Get.offAll(() => const DashboardView());
+        if (token != null) {
+          authToken.write('token', token);
+          print("Token berhasil disimpan: $token");
+          Get.offAll(() => const DashboardView());
+        } else {
+          _showErrorSnackbar('Token tidak ditemukan di respons!');
+        }
       } else {
-        Get.snackbar(
-          'Error',
-          'Token tidak ditemukan di respons!',
-          icon: const Icon(Icons.error),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        final errorMessage = response.body['message'] ?? 'Login gagal';
+        _showErrorSnackbar(errorMessage);
       }
-    } else {
-      Get.snackbar(
-        'Error',
-        response.body['message'] ?? 'Login gagal',
-        icon: const Icon(Icons.error),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+    } catch (e) {
+      _showErrorSnackbar('Terjadi kesalahan: ${e.toString()}');
     }
+  }
+
+  void _showErrorSnackbar(String message) {
+    Get.snackbar(
+      'Error',
+      message,
+      icon: const Icon(Icons.error),
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 }

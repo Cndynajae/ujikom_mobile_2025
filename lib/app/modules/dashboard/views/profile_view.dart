@@ -13,7 +13,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('PROFILE'),
         centerTitle: true,
         actions: [
           IconButton(

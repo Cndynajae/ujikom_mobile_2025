@@ -15,7 +15,7 @@ class BoardView extends GetView<DashboardController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Board'),
+        title: const Text('BOARD'),
         centerTitle: true,
         actions: [
           IconButton(
