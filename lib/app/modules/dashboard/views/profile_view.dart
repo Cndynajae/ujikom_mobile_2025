@@ -21,9 +21,9 @@ class ProfileView extends GetView<ProfileController> {
             onPressed: () {
               Get.defaultDialog(
                   title: "Konfirmasi",
-                  middleText: "Apakah anda ingin Logout ?",
-                  textConfirm: "Ya",
-                  textCancel: "Tidak",
+                  middleText: "Apakah anda ingin Keluar ?",
+                  textConfirm: "Ya, Keluar",
+                  textCancel: "Batal",
                   confirmTextColor: Colors.white,
                   onConfirm: () {
                     controller.logout();
