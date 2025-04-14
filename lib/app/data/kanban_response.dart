@@ -23,6 +23,7 @@ class Task {
   int? ownerId;
   int? responsibleId;
   int? statusId;
+  Status? status; // Tambahkan ini
   int? projectId;
   int? typeId;
   int? priorityId;
@@ -38,6 +39,7 @@ class Task {
     this.ownerId,
     this.responsibleId,
     this.statusId,
+    this.status,
     this.projectId,
     this.typeId,
     this.priorityId,
@@ -55,6 +57,7 @@ class Task {
       ownerId: json['owner_id'],
       responsibleId: json['responsible_id'],
       statusId: json['status_id'],
+      status: json['status'] != null ? Status.fromJson(json['status']) : null,
       projectId: json['project_id'],
       typeId: json['type_id'],
       priorityId: json['priority_id'],
@@ -62,6 +65,26 @@ class Task {
       endDate: json['end_date'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+    );
+  }
+}
+
+class Status {
+  int? id;
+  String? name;
+  String? color;
+
+  Status({
+    this.id,
+    this.name,
+    this.color,
+  });
+
+  factory Status.fromJson(Map<String, dynamic> json) {
+    return Status(
+      id: json['id'],
+      name: json['name'],
+      color: json['color'],
     );
   }
 }

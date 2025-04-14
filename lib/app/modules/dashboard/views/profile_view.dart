@@ -12,223 +12,209 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PROFILE'),
+        title: const Text('Profile'),
         centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
-        Container(
-            margin: const EdgeInsets.only(right: 16),
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Get.dialog(
-                  Dialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: 5,
-                    backgroundColor: Colors.white,
-                    child: Container(
-                      width: Get.width * 0.8,
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            "Konfirmasi",
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.black87),
+            onPressed: () {
+              Get.dialog(
+                Dialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text("Konfirmasi Logout",
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 16),
+                        const Text("Apakah Anda yakin ingin keluar?",
+                            textAlign: TextAlign.center),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(
+                              onPressed: () => Get.back(),
+                              child: const Text("Batal",
+                                  style: TextStyle(color: Colors.blue)),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          const Text(
-                            "Apakah anda ingin Keluar?",
-                            style: TextStyle(fontSize: 18),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextButton(
-                                onPressed: () => Get.back(),
-                                child: const Text(
-                                  "Batal",
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  controller.logout();
-                                  Get.back();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 12),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                child: const Text(
-                                  "Ya, Keluar",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ElevatedButton(
+                              onPressed: () {
+                                controller.logout();
+                                Get.back();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue),
+                              child: const Text("Ya, Keluar"),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                  barrierDismissible: false,
-                );
-              },
-              icon: const Icon(Icons.logout, color: Colors.white),
-              label:
-                  const Text("Logout", style: TextStyle(color: Colors.white)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                elevation: 2,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
                 ),
-              ),
-            ),
-          )
-          // IconButton(
-          //   icon: const Icon(Icons.logout),
-          //   onPressed: () {
-          //     Get.defaultDialog(
-          //         title: "Konfirmasi",
-          //         middleText: "Apakah anda ingin Keluar ?",
-          //         textConfirm: "Ya, Keluar",
-          //         textCancel: "Batal",
-          //         confirmTextColor: Colors.white,
-          //         onConfirm: () {
-          //           controller.logout();
-          //           Get.back();
-          //         },
-          //         onCancel: () {
-          //           Get.back();
-          //         });
-          //   },
-          // ),
-        ],
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: FutureBuilder<ProfileResponse>(
-            future: controller.getProfile(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: Lottie.network(
-                    'https://gist.githubusercontent.com/olipiskandar/4f08ac098c81c32ebc02c55f5b11127b/raw/6e21dc500323da795e8b61b5558748b5c7885157/loading.json',
-                    repeat: true,
-                    width: MediaQuery.of(context).size.width / 1,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const CircularProgressIndicator();
-                    },
-                  ),
-                );
-              }
-
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text("Failed to load profile: ${snapshot.error}"),
-                );
-              }
-
-              final data = snapshot.data;
-
-              if (data == null || data.email == null || data.email!.isEmpty) {
-                return const Center(child: Text("No profile data available"));
-              }
-
-              // Debug avatar URL
-              print("Avatar URL: ${data.avatar}");
-
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Avatar handler with fallback
-                  _buildAvatar(data),
-                  const SizedBox(height: 16),
-                  Text(
-                    "${data.name ?? 'No Name'}",
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text("${data.nrp ?? 'No NRP'}"),
-                ],
               );
             },
           ),
-        ),
+        ],
       ),
+      extendBodyBehindAppBar: true,
+      body: FutureBuilder<ProfileResponse>(
+        future: controller.getProfile(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Lottie.network(
+                'https://gist.githubusercontent.com/olipiskandar/4f08ac098c81c32ebc02c55f5b11127b/raw/6e21dc500323da795e8b61b5558748b5c7885157/loading.json',
+                repeat: true,
+                width: MediaQuery.of(context).size.width,
+              ),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+                child: Text("Gagal memuat profil: ${snapshot.error}"));
+          }
+
+          final data = snapshot.data;
+
+          if (data == null || data.email == null || data.email!.isEmpty) {
+            return const Center(child: Text("Data profil tidak tersedia"));
+          }
+
+          return Stack(
+            children: [
+              _buildTopBackground(),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 100),
+                    _buildAvatar(data),
+                    const SizedBox(height: 12),
+                    Text(
+                      "${data.name ?? 'Tidak Ada Nama'}",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "${data.email ?? 'Tidak Ada Email'}",
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    const SizedBox(height: 30),
+                    _buildInfoCard(data),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildTopBackground() {
+    return Container(
+      height: 150,
+      // decoration: const BoxDecoration(
+      //   gradient: LinearGradient(
+      //     colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+      //     begin: Alignment.topLeft,
+      //     end: Alignment.bottomRight,
+      //   ),
+      //   borderRadius: BorderRadius.only(
+      //     bottomLeft: Radius.circular(30.0), // Adjust the radius as you like
+      //     bottomRight: Radius.circular(30.0), // Adjust the radius as you like
+      //   ),
+      // ),
     );
   }
 
   Widget _buildAvatar(ProfileResponse data) {
-    // Check if avatar URL exists and is not empty
-    if (data.avatar != null && data.avatar!.isNotEmpty) {
-      // Try to validate URL format
-      bool isValidUrl = data.avatar!.startsWith('http://') ||
-          data.avatar!.startsWith('https://');
-
-      if (isValidUrl) {
-        return Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.grey.shade300, width: 2),
-          ),
-        );
-      }
-    }
-
-    // Fallback if no valid avatar URL
-    return _buildFallbackAvatar(data);
-  }
-
-  Widget _buildFallbackAvatar(ProfileResponse data) {
-    String initial = '';
-    if (data.name != null && data.name!.isNotEmpty) {
-      initial = data.name![0].toUpperCase();
-    }
+    final isValidAvatar = data.avatar != null &&
+        data.avatar!.isNotEmpty &&
+        (data.avatar!.startsWith("http://") ||
+            data.avatar!.startsWith("https://"));
 
     return Container(
-      width: 100,
-      height: 100,
+      margin: const EdgeInsets.only(top: 40),
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
         shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 4),
+        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 8)],
       ),
-      child: Center(
-        child: Text(
-          initial,
-          style: const TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            color: Colors.black54,
+      child: CircleAvatar(
+        radius: 50,
+        backgroundColor: Colors.grey.shade300,
+        backgroundImage: isValidAvatar ? NetworkImage(data.avatar!) : null,
+        child: !isValidAvatar
+            ? Text(
+                data.name != null && data.name!.isNotEmpty
+                    ? data.name![0].toUpperCase()
+                    : '',
+                style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54),
+              )
+            : null,
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(ProfileResponse data) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _infoRow(Icons.person, "Nama", data.name ?? "-"),
+              const SizedBox(height: 16),
+              _infoRow(Icons.badge, "NRP", data.nrp ?? "-"),
+            ],
           ),
         ),
       ),
     );
   }
+
+  Widget _infoRow(IconData icon, String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: Colors.blue),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label,
+                  style: const TextStyle(fontSize: 14, color: Colors.grey)),
+              const SizedBox(height: 4),
+              Text(value,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500)),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
+
+
 
 
 

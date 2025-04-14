@@ -34,6 +34,7 @@ class LoginView extends GetView<LoginController> {
                   border: OutlineInputBorder(),
                   labelText: 'NRP',
                   hintText: 'Masukan NRP',
+                  prefixIcon: const Icon(Icons.person),
                 ),
               ),
             ),
@@ -48,6 +49,7 @@ class LoginView extends GetView<LoginController> {
                     border: const OutlineInputBorder(),
                     labelText: 'Password',
                     hintText: 'Masukan Password',
+                    prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       onPressed: controller.togglePasswordVisibility,
                       icon: Icon(
