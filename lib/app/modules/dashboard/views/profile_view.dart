@@ -170,7 +170,7 @@ class ProfileView extends GetView<ProfileController> {
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  Text("${data.email ?? 'No Email'}"),
+                  Text("${data.nrp ?? 'No NRP'}"),
                 ],
               );
             },
@@ -230,8 +230,11 @@ class ProfileView extends GetView<ProfileController> {
   }
 }
 
-// import 'package:flutter/material.dart';
 
+
+
+
+// import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:intra_sub_mobile/app/data/profile_response.dart';
 // import 'package:intra_sub_mobile/app/modules/profile/controllers/profile_controller.dart';
