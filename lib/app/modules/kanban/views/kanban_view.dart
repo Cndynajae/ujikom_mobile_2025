@@ -16,9 +16,9 @@ class KanbanView extends GetView<KanbanController> {
   Color getStatusColor(String? status) {
     switch (status?.toLowerCase()) {
       case 'to do':
-        return Colors.grey;
+        return Colors.red;
       case 'in progress':
-        return Colors.orange;
+        return Colors.blue;
       case 'done':
         return Colors.green;
       default:
