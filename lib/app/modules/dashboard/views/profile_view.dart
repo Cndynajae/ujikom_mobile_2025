@@ -12,7 +12,8 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Profile', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 0.5),
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
